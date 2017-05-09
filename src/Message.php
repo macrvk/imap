@@ -289,6 +289,19 @@ class Message extends Message\Part
     }
 
     /**
+     * Save message to file
+     *
+     * @throws MessageSaveException
+     */
+    public function save($filename)
+    {
+        if (!imap_savebody($this->stream, $filename, $this->messageNumber)) {
+            throw new MessageSaveException($this->messageNumber);
+        }
+
+    }
+
+    /**
      * Prevent the message from being marked as seen
      *
      * Defaults to true, so messages that are read will be still marked as unseen.
